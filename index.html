@@ -50,25 +50,53 @@
     outline: none;
     background: #fff;
   }
+
+  /* Estilo do botão de info e tooltip */
   .field-with-info {
     position: relative;
   }
   .info-btn {
     position: absolute;
     right: 10px;
-    top: 12px;
+    top: 50%;
+    transform: translateY(-50%);
     background: #3498db;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     font-size: 14px;
     cursor: pointer;
+    text-align: center;
+    line-height: 20px;
+    padding: 0;
   }
   .info-btn:hover {
     background: #2980b9;
   }
+  .tooltip {
+    visibility: hidden;
+    width: 220px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.85rem;
+  }
+  .field-with-info:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
   button {
     margin-top: 20px;
     padding: 15px;
@@ -112,7 +140,8 @@
         <option value="demissao">Demissão sem justa causa</option>
         <option value="justa">Demissão por justa causa</option>
       </select>
-      <button type="button" class="info-btn" onclick="alert('Escolha o motivo da demissão. Ele afeta aviso prévio, FGTS e multa.')">?</button>
+      <button type="button" class="info-btn">?</button>
+      <div class="tooltip">Escolha o motivo da demissão. Ele afeta aviso prévio, FGTS e multa.</div>
     </div>
 
     <div class="field-with-info">
@@ -122,7 +151,8 @@
         <option value="sim">Sim</option>
         <option value="nao">Não</option>
       </select>
-      <button type="button" class="info-btn" onclick="alert('Se você tem férias vencidas, elas devem ser pagas integralmente na rescisão.')">?</button>
+      <button type="button" class="info-btn">?</button>
+      <div class="tooltip">Se você tem férias vencidas, elas devem ser pagas integralmente na rescisão.</div>
     </div>
 
     <div class="field-with-info">
@@ -132,7 +162,8 @@
         <option value="trabalhado">Trabalhado</option>
         <option value="indenizado">Indenizado</option>
       </select>
-      <button type="button" class="info-btn" onclick="alert('O aviso prévio pode ser trabalhado ou indenizado. Ele afeta o valor da rescisão.')">?</button>
+      <button type="button" class="info-btn">?</button>
+      <div class="tooltip">O aviso prévio pode ser trabalhado ou indenizado. Ele afeta o valor da rescisão.</div>
     </div>
 
     <button type="submit">Calcular Rescisão</button>
