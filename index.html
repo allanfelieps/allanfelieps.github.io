@@ -3,15 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Calculadora de Rescisão</title>
-
 <style>
 * { box-sizing: border-box; font-family: Arial, sans-serif; }
-
 body {
   background: #f4f7fb;
   padding: 20px;
 }
-
 .container {
   max-width: 650px;
   margin: auto;
@@ -20,7 +17,6 @@ body {
   border-radius: 12px;
   box-shadow: 0 5px 25px rgba(0,0,0,0.08);
 }
-
 h1 {
   font-size: 38px;
   font-weight: 700;
@@ -29,24 +25,20 @@ h1 {
   margin-bottom: 10px;
   color: #007B5E;
 }
-
 .subtitulo {
   font-size: 18px;
   text-align: center;
   margin-bottom: 25px;
   color: #444;
 }
-
 label {
   font-weight: 600;
   margin-top: 15px;
   display: block;
 }
-
 .input-group {
   position: relative;
 }
-
 .input-group span {
   position: absolute;
   left: 10px;
@@ -54,11 +46,9 @@ label {
   transform: translateY(-50%);
   color: #555;
 }
-
 .input-group input {
   padding-left: 30px;
 }
-
 input, select {
   width: 100%;
   padding: 12px;
@@ -69,14 +59,12 @@ input, select {
   font-size: 14px;
   transition: 0.3s;
 }
-
 input:focus, select:focus {
   outline: none;
   border-color: #007B5E;
   background: #fff;
   box-shadow: 0 0 5px rgba(0,123,94,0.2);
 }
-
 button {
   margin-top: 20px;
   width: 100%;
@@ -87,47 +75,48 @@ button {
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  transition: 0.3s;
 }
-
 button:hover {
   background: #005a42;
+  transform: translateY(-2px);
 }
-
 .resultado {
   margin-top: 20px;
   padding: 20px;
-  background: #f1fdf7;
-  border-radius: 8px;
+  background: #e8f6ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   display: none;
+  text-align: center;
 }
-
+/* Checkbox e ajuda */
 .checkbox {
   margin-top: 15px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .checkbox input {
   width: auto;
   margin: 0;
 }
-
-/* Botão de interrogação */
 .help-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: #007B5E;
   color: white;
   border-radius: 50%;
   width: 20px;
   height: 20px;
   font-size: 14px;
-  line-height: 20px;
-  text-align: center;
   cursor: pointer;
   margin-left: 8px;
 }
-
+.help-btn:hover {
+  background: #005a42;
+}
 .help-text {
   display: none;
   font-size: 13px;
@@ -138,18 +127,49 @@ button:hover {
   border-radius: 6px;
   border: 1px solid #ddd;
 }
+/* Seção Como Funciona */
+.how-it-works {
+  margin-top: 50px;
+  text-align: center;
+}
+.how-it-works h2 { margin-bottom: 25px; }
+.how-it-works .steps {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.how-it-works .step {
+  background: #f9fafc;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+/* Seção HTTPS seguro */
+.trust {
+  margin-top: 40px;
+  text-align: center;
+  background: #f1fdf7;
+  padding: 20px;
+  border-radius: 10px;
+}
+/* Responsividade */
+@media(max-width:500px){
+  .container { padding: 20px; }
+  h1 { font-size: 28px; }
+  .subtitulo { font-size: 16px; }
+  .how-it-works .steps { flex-direction: column; }
+}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
   <h1>CÁLCULO DA RESCISÃO</h1>
   <div class="subtitulo">
     Saiba agora como realizar o cálculo da rescisão trabalhista
   </div>
-
+  
   <label>
     Motivo da rescisão
     <span class="help-btn" onclick="toggleHelp('help-motivo')">?</span>
@@ -167,13 +187,10 @@ button:hover {
 
   <label>Data de admissão</label>
   <input type="date" id="admissao">
-
   <label>Data de demissão</label>
   <input type="date" id="demissao">
 
-  <label>
-    Salário
-  </label>
+  <label>Salário</label>
   <div class="input-group">
     <span>R$</span>
     <input type="text" id="salario" placeholder="0,00">
@@ -204,6 +221,32 @@ button:hover {
   <button onclick="baixarPDF()">Baixar PDF</button>
 
   <div class="resultado" id="resultado"></div>
+
+  <!-- Seção Como Funciona -->
+  <section class="how-it-works">
+    <h2>Como Funciona</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>1. Preencha seus dados</h3>
+        <p>Informe salário, datas e motivo da saída.</p>
+      </div>
+      <div class="step">
+        <h3>2. Marque adicionais</h3>
+        <p>Inclua férias vencidas e aviso prévio se houver.</p>
+      </div>
+      <div class="step">
+        <h3>3. Veja o resultado</h3>
+        <p>O cálculo aparece detalhado e fácil de entender.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção HTTPS seguro -->
+  <section class="trust">
+    <h3>🔐 Site Seguro</h3>
+    <p>Todos os dados são transmitidos via HTTPS. Sua privacidade é protegida!</p>
+  </section>
+
 </div>
 
 <script>
@@ -211,11 +254,9 @@ function toggleHelp(id) {
   const elem = document.getElementById(id);
   elem.style.display = elem.style.display === 'block' ? 'none' : 'block';
 }
-
 function formatarMoeda(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
-
 document.getElementById("salario").addEventListener("input", function(e) {
   let valor = e.target.value.replace(/\D/g, "");
   valor = (valor / 100).toFixed(2) + "";
@@ -223,7 +264,6 @@ document.getElementById("salario").addEventListener("input", function(e) {
   valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   e.target.value = valor;
 });
-
 function calcular() {
   const motivo = document.getElementById("motivo").value;
   const admissao = new Date(document.getElementById("admissao").value);
@@ -232,45 +272,23 @@ function calcular() {
   let salario = document.getElementById("salario").value.replace(/\./g,'').replace(',','.');
   salario = parseFloat(salario);
   const ferias = document.getElementById("ferias").checked;
-
   if (!salario || !admissao || !demissao) {
     alert("Preencha todos os campos!");
     return;
   }
-
-  // Calcular tempo total em anos e meses
   let anos = demissao.getFullYear() - admissao.getFullYear();
   let meses = demissao.getMonth() - admissao.getMonth();
   if (meses < 0) { anos--; meses += 12; }
   const totalMeses = anos*12 + meses;
-
-  // FGTS
   let fgts = salario * 0.08 * totalMeses;
-
-  // Multa de 40% sobre FGTS
   let multa = (motivo === "sem") ? fgts * 0.4 : 0;
-
-  // Férias
   let valorFerias = ferias ? salario + salario/3 : 0;
-
-  // Aviso prévio indenizado
   let valorAviso = 0;
-  if (aviso === "sim") {
-    valorAviso = salario;
-  }
-
-  // Ajustes para justa causa
-  if (motivo === "justa") {
-    multa = 0;
-    valorFerias = 0;
-    valorAviso = 0;
-  }
-
+  if (aviso === "sim") { valorAviso = salario; }
+  if (motivo === "justa") { multa = 0; valorFerias = 0; valorAviso = 0; }
   const total = salario + fgts + multa + valorFerias + valorAviso;
-
   const resultado = document.getElementById("resultado");
   resultado.style.display = "block";
-
   resultado.innerHTML = `
     <strong>Resultado:</strong><br><br>
     Tempo: ${anos} ano(s) e ${meses} mês(es) (${totalMeses} meses)<br>
@@ -284,7 +302,6 @@ function calcular() {
     <small>Este cálculo é apenas uma estimativa. Consulte um contador ou advogado trabalhista.</small>
   `;
 }
-
 function baixarPDF() {
   const conteudo = document.getElementById("resultado").innerText;
   const win = window.open('', '', 'height=700,width=700');
@@ -293,6 +310,5 @@ function baixarPDF() {
   win.print();
 }
 </script>
-
 </body>
 </html>
