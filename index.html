@@ -3,174 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Rescisão</title>
+<title>Mapa Visual Avançado do Site</title>
 <style>
-* { box-sizing: border-box; font-family: Arial, sans-serif; }
 body {
+  font-family: Arial, sans-serif;
   background: #f4f7fb;
-  margin: 0;
   padding: 20px;
 }
 .container {
-  max-width: 700px;
+  max-width: 1000px;
   margin: auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-h1 { font-size: 2.5rem; margin-bottom: 0; color: #2c3e50; }
-h2 { font-size: 1.2rem; font-weight: normal; color: #555; margin-top: 5px; margin-bottom: 30px; }
-label { display: block; margin: 15px 0 5px; font-weight: bold; }
-
-/* Estilo uniforme para todos os campos */
-input, select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-size: 1rem;
-  transition: 0.3s;
-  margin-bottom: 20px; /* Espaço entre campos */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 40px;
 }
-input:focus, select:focus { border-color: #3498db; outline: none; background: #fff; }
 
-/* Flexbox para alinhar botão de info */
-.field-with-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+/* Mapa em grid hierárquico */
+.map {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
   position: relative;
 }
-.field-with-info select {
-  flex: 1;
-}
-.info-btn {
-  margin-left: 10px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
-}
-.info-btn:hover { background: #2980b9; }
 
-/* Tooltip */
-.tooltip {
-  visibility: hidden;
-  width: 220px;
-  background-color: #555;
-  color: #fff;
-  text-align: left;
-  border-radius: 6px;
-  padding: 8px;
-  position: absolute;
-  z-index: 1;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 0.85rem;
-}
-.field-with-info:hover .tooltip { visibility: visible; opacity: 1; }
-
-button[type="submit"] {
-  margin-top: 20px;
-  padding: 15px;
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  background: #3498db;
-  color: white;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-button[type="submit"]:hover { background: #2980b9; }
-
-.result {
-  margin-top: 25px;
+/* Blocos do site */
+.block {
   padding: 20px;
-  background: #e8f6ff;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  color: #2c3e50;
+  border-radius: 12px;
+  color: #fff;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.block:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.block h2 { margin: 0 0 10px; font-size: 1.2rem; }
+.block p { margin: 0; font-size: 0.95rem; }
+
+/* Cores por tipo */
+.header { background: #3498db; }
+.hero { background: #1abc9c; }
+.form { background: #e67e22; }
+.result { background: #9b59b6; }
+.info { background: #f1c40f; color: #333; }
+.footer { background: #34495e; }
+
+/* Setas usando pseudo-elementos */
+.block::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: #ccc;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -40px;
+}
+.block:last-child::after { display: none; }
+
+/* Responsivo */
+@media(max-width: 700px) {
+  .map { grid-template-columns: 1fr; }
+  .block::after { height: 30px; bottom: -30px; }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>CÁLCULO DA RESCISÃO</h1>
-  <h2>Saiba agora como calcular sua rescisão trabalhista</h2>
+  <h1>Mapa Visual Avançado do Site</h1>
 
-  <form id="rescisaoForm">
-    <label for="salario">Salário Mensal (R$)</label>
-    <input type="number" id="salario" placeholder="Ex: 2500" required>
-
-    <div class="field-with-info">
-      <select id="motivo" required>
-        <option value="">Motivo da Demissão</option>
-        <option value="pedido">Pedido do empregado</option>
-        <option value="demissao">Demissão sem justa causa</option>
-        <option value="justa">Demissão por justa causa</option>
-      </select>
-      <button type="button" class="info-btn">?</button>
-      <div class="tooltip">Escolha o motivo da demissão. Ele afeta aviso prévio, FGTS e multa.</div>
+  <div class="map">
+    <div class="block header">
+      <h2>Header</h2>
+      <p>Logo, menu de navegação, título principal.</p>
     </div>
-
-    <div class="field-with-info">
-      <select id="ferias" required>
-        <option value="">Possui Férias Vencidas?</option>
-        <option value="sim">Sim</option>
-        <option value="nao">Não</option>
-      </select>
-      <button type="button" class="info-btn">?</button>
-      <div class="tooltip">Se você tem férias vencidas, elas devem ser pagas integralmente na rescisão.</div>
+    <div class="block hero">
+      <h2>Hero Section</h2>
+      <p>CÁLCULO DA RESCISÃO + mensagem “Saiba como calcular”.</p>
     </div>
-
-    <div class="field-with-info">
-      <select id="aviso" required>
-        <option value="">Aviso Prévio</option>
-        <option value="trabalhado">Trabalhado</option>
-        <option value="indenizado">Indenizado</option>
-      </select>
-      <button type="button" class="info-btn">?</button>
-      <div class="tooltip">O aviso prévio pode ser trabalhado ou indenizado. Ele afeta o valor da rescisão.</div>
+    <div class="block form">
+      <h2>Formulário</h2>
+      <p>Campos: Salário, Motivo, Férias, Aviso Prévio + botões ? com tooltip.</p>
     </div>
-
-    <button type="submit">Calcular Rescisão</button>
-  </form>
-
-  <div class="result" id="resultado"></div>
+    <div class="block result">
+      <h2>Resultado</h2>
+      <p>Caixa mostrando o valor da rescisão calculado.</p>
+    </div>
+    <div class="block info">
+      <h2>Como Funciona</h2>
+      <p>Seção explicando cálculo resumido e direitos do trabalhador.</p>
+    </div>
+    <div class="block footer">
+      <h2>Rodapé</h2>
+      <p>Informações de contato, links legais, política de privacidade.</p>
+    </div>
+  </div>
 </div>
-
-<script>
-document.getElementById('rescisaoForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const salario = parseFloat(document.getElementById('salario').value);
-  const motivo = document.getElementById('motivo').value;
-  const ferias = document.getElementById('ferias').value;
-  const aviso = document.getElementById('aviso').value;
-
-  let total = 0;
-  if(aviso === 'indenizado') total += salario;
-  if(ferias === 'sim') total += salario + salario/3;
-  if(motivo === 'demissao') total += salario * 0.4;
-
-  document.getElementById('resultado').innerHTML = `Valor aproximado da rescisão: <strong>R$ ${total.toFixed(2)}</strong>`;
-});
-</script>
 
 </body>
 </html>
