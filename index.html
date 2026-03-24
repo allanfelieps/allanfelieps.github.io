@@ -31,7 +31,7 @@
       margin-top: 10px;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -77,6 +77,13 @@
 <div class="container">
   <h1>Calculadora de Rescisão</h1>
 
+  <label>Motivo da rescisão</label>
+  <select id="motivo">
+    <option value="Sem justa causa">Sem justa causa</option>
+    <option value="Pedido de demissão">Pedido de demissão</option>
+    <option value="Justa causa">Justa causa</option>
+  </select>
+
   <label>Data de admissão</label>
   <input type="date" id="admissao">
 
@@ -98,6 +105,7 @@
 
 <script>
 function calcular() {
+  const motivo = document.getElementById("motivo").value;
   const admissao = new Date(document.getElementById("admissao").value);
   const demissao = new Date(document.getElementById("demissao").value);
   const salario = parseFloat(document.getElementById("salario").value);
@@ -130,6 +138,7 @@ function calcular() {
 
   resultado.innerHTML = `
     <strong>Resultado:</strong><br><br>
+    Motivo da rescisão: ${motivo}<br>
     Tempo trabalhado: ${meses} meses<br>
     Saldo de salário: R$ ${saldoSalario.toFixed(2)}<br>
     FGTS: R$ ${fgts.toFixed(2)}<br>
