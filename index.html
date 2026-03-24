@@ -98,6 +98,7 @@ function calcular() {
   let salario = parseFloat(document.getElementById('salario').value);
   let admissao = new Date(document.getElementById('admissao').value);
   let demissao = new Date(document.getElementById('demissao').value);
+  let tipo = document.getElementById('tipo').value;
 
   if (!salario || !admissao || !demissao) {
     alert("Preencha todos os campos!");
@@ -111,10 +112,20 @@ function calcular() {
   let ferias = (salario / 12) * meses;
   let decimo = (salario / 12) * meses;
 
-  let total = saldo + ferias + decimo;
+  let fgts = salario * 0.08 * meses;
+  let multa = tipo === "sem_justa" ? fgts * 0.4 : 0;
 
-  document.getElementById('resultado').innerHTML =
-    "💰 Total estimado: R$ " + total.toFixed(2);
+  let total = saldo + ferias + decimo + multa;
+
+  document.getElementById('resultado').innerHTML = `
+    <p>Saldo de salário: R$ ${saldo.toFixed(2)}</p>
+    <p>Férias: R$ ${ferias.toFixed(2)}</p>
+    <p>13º salário: R$ ${decimo.toFixed(2)}</p>
+    <p>FGTS acumulado: R$ ${fgts.toFixed(2)}</p>
+    <p>Multa FGTS: R$ ${multa.toFixed(2)}</p>
+    <hr>
+    <h3>Total: R$ ${total.toFixed(2)}</h3>
+  `;
 }
 </script>
 
