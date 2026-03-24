@@ -76,6 +76,14 @@ button {
 
 .checkbox {
   margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox input {
+  width: auto;
+  margin: 0;
 }
 </style>
 </head>
@@ -104,9 +112,11 @@ button {
     <input type="text" id="salario">
   </div>
 
-  <div class="checkbox">
-    <input type="checkbox" id="ferias"> Possui férias vencidas
-  </div>
+  <!-- CHECKBOX CORRIGIDO -->
+  <label class="checkbox">
+    <input type="checkbox" id="ferias">
+    <span>Possui férias vencidas</span>
+  </label>
 
   <button onclick="calcular()">Calcular</button>
   <button onclick="baixarPDF()">Baixar PDF</button>
@@ -119,7 +129,6 @@ function formatarMoeda(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-// formatação automática enquanto digita
 document.getElementById("salario").addEventListener("input", function(e) {
   let valor = e.target.value.replace(/\D/g, "");
   valor = (valor / 100).toFixed(2) + "";
@@ -148,7 +157,6 @@ function calcular() {
   let multa = fgts * 0.4;
   let valorFerias = ferias ? salario + salario/3 : 0;
 
-  // regras por tipo
   if (motivo === "pedido") {
     multa = 0;
   }
@@ -180,7 +188,6 @@ function calcular() {
   `;
 }
 
-// PDF simples
 function baixarPDF() {
   const conteudo = document.getElementById("resultado").innerText;
   const win = window.open('', '', 'height=700,width=700');
