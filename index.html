@@ -58,6 +58,17 @@
       border-radius: 5px;
       display: none;
     }
+
+    .checkbox {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkbox input {
+      width: auto;
+    }
   </style>
 </head>
 
@@ -75,6 +86,11 @@
   <label>Salário</label>
   <input type="number" id="salario">
 
+  <div class="checkbox">
+    <input type="checkbox" id="ferias">
+    <span>Possui férias vencidas</span>
+  </div>
+
   <button onclick="calcular()">Calcular</button>
 
   <div class="resultado" id="resultado"></div>
@@ -85,6 +101,7 @@ function calcular() {
   const admissao = new Date(document.getElementById("admissao").value);
   const demissao = new Date(document.getElementById("demissao").value);
   const salario = parseFloat(document.getElementById("salario").value);
+  const ferias = document.getElementById("ferias").checked;
 
   if (!document.getElementById("admissao").value || 
       !document.getElementById("demissao").value || 
@@ -100,7 +117,13 @@ function calcular() {
   const fgts = salario * 0.08 * meses;
   const multa = fgts * 0.4;
 
-  const total = saldoSalario + fgts + multa;
+  let valorFerias = 0;
+
+  if (ferias) {
+    valorFerias = salario + (salario / 3);
+  }
+
+  const total = saldoSalario + fgts + multa + valorFerias;
 
   const resultado = document.getElementById("resultado");
   resultado.style.display = "block";
@@ -110,8 +133,9 @@ function calcular() {
     Tempo trabalhado: ${meses} meses<br>
     Saldo de salário: R$ ${saldoSalario.toFixed(2)}<br>
     FGTS: R$ ${fgts.toFixed(2)}<br>
-    Multa FGTS: R$ ${multa.toFixed(2)}<br><br>
-    <strong>Total: R$ ${total.toFixed(2)}</strong>
+    Multa FGTS: R$ ${multa.toFixed(2)}<br>
+    ${ferias ? `Férias vencidas: R$ ${valorFerias.toFixed(2)}<br>` : ""}
+    <br><strong>Total: R$ ${total.toFixed(2)}</strong>
   `;
 }
 </script>
