@@ -1,75 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Calculadora de Rescisão</title>
+<meta charset="UTF-8">
+<title>Calculadora de Rescisão</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
+<style>
+* { box-sizing: border-box; font-family: Arial; }
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+body {
+  background: #f4f7fb;
+  padding: 20px;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 10px;
-    }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+label {
+  font-weight: 600;
+  margin-top: 15px;
+  display: block;
+}
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background: green;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
 
-    .resultado {
-      margin-top: 20px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-radius: 5px;
-      display: none;
-    }
+.input-group {
+  position: relative;
+}
 
-    .checkbox {
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.input-group span {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-    .checkbox input {
-      width: auto;
-    }
-  </style>
+.input-group input {
+  padding-left: 30px;
+}
+
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background: #00a86b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.resultado {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f1fdf7;
+  border-radius: 8px;
+  display: none;
+}
+
+.checkbox {
+  margin-top: 15px;
+}
+</style>
 </head>
 
 <body>
@@ -79,9 +87,9 @@
 
   <label>Motivo da rescisão</label>
   <select id="motivo">
-    <option value="Sem justa causa">Sem justa causa</option>
-    <option value="Pedido de demissão">Pedido de demissão</option>
-    <option value="Justa causa">Justa causa</option>
+    <option value="sem">Sem justa causa</option>
+    <option value="pedido">Pedido de demissão</option>
+    <option value="justa">Justa causa</option>
   </select>
 
   <label>Data de admissão</label>
@@ -91,68 +99,94 @@
   <input type="date" id="demissao">
 
   <label>Salário</label>
-  <input type="number" id="salario">
+  <div class="input-group">
+    <span>R$</span>
+    <input type="text" id="salario">
+  </div>
 
   <div class="checkbox">
-    <input type="checkbox" id="ferias">
-    <span>Possui férias vencidas</span>
+    <input type="checkbox" id="ferias"> Possui férias vencidas
   </div>
 
   <button onclick="calcular()">Calcular</button>
+  <button onclick="baixarPDF()">Baixar PDF</button>
 
   <div class="resultado" id="resultado"></div>
 </div>
 
 <script>
+function formatarMoeda(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+// formatação automática enquanto digita
+document.getElementById("salario").addEventListener("input", function(e) {
+  let valor = e.target.value.replace(/\D/g, "");
+  valor = (valor / 100).toFixed(2) + "";
+  valor = valor.replace(".", ",");
+  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  e.target.value = valor;
+});
+
 function calcular() {
   const motivo = document.getElementById("motivo").value;
   const admissao = new Date(document.getElementById("admissao").value);
   const demissao = new Date(document.getElementById("demissao").value);
-  const salario = parseFloat(document.getElementById("salario").value);
+  let salario = document.getElementById("salario").value.replace(/\./g,'').replace(',','.');
+  salario = parseFloat(salario);
+
   const ferias = document.getElementById("ferias").checked;
 
-  if (!document.getElementById("admissao").value || 
-      !document.getElementById("demissao").value || 
-      !salario) {
-    alert("Preencha todos os campos!");
+  if (!salario || !admissao || !demissao) {
+    alert("Preencha tudo!");
     return;
   }
 
-  const tempo = (demissao - admissao) / (1000 * 60 * 60 * 24 * 30);
-  const meses = Math.floor(tempo);
+  const meses = Math.floor((demissao - admissao) / (1000*60*60*24*30));
 
-  const saldoSalario = salario;
-  const fgts = salario * 0.08 * meses;
-  const multa = fgts * 0.4;
+  let fgts = salario * 0.08 * meses;
+  let multa = fgts * 0.4;
+  let valorFerias = ferias ? salario + salario/3 : 0;
 
-  let valorFerias = 0;
-
-  if (ferias) {
-    valorFerias = salario + (salario / 3);
+  // regras por tipo
+  if (motivo === "pedido") {
+    multa = 0;
   }
 
-  const total = saldoSalario + fgts + multa + valorFerias;
+  if (motivo === "justa") {
+    multa = 0;
+    valorFerias = 0;
+  }
+
+  const total = salario + fgts + multa + valorFerias;
 
   const resultado = document.getElementById("resultado");
   resultado.style.display = "block";
 
   resultado.innerHTML = `
     <strong>Resultado:</strong><br><br>
-    Motivo da rescisão: ${motivo}<br>
-    Tempo trabalhado: ${meses} meses<br>
-    Saldo de salário: R$ ${saldoSalario.toFixed(2)}<br>
-    FGTS: R$ ${fgts.toFixed(2)}<br>
-    Multa FGTS: R$ ${multa.toFixed(2)}<br>
-    ${ferias ? `Férias vencidas: R$ ${valorFerias.toFixed(2)}<br>` : ""}
-    <br><strong>Total: R$ ${total.toFixed(2)}</strong>
+    Tempo: ${meses} meses<br>
+    Salário: ${formatarMoeda(salario)}<br>
+    FGTS: ${formatarMoeda(fgts)}<br>
+    Multa: ${formatarMoeda(multa)}<br>
+    ${valorFerias ? `Férias: ${formatarMoeda(valorFerias)}<br>` : ""}
+    <br><strong>Total: ${formatarMoeda(total)}</strong>
 
-    <hr style="margin:15px 0;">
+    <hr>
 
-    <small style="color:#555;">
-      Este cálculo é apenas uma estimativa e pode variar conforme a legislação vigente e o caso específico. 
-      Para valores exatos, consulte um contador ou advogado trabalhista.
+    <small>
+    Este cálculo é apenas uma estimativa. Consulte um contador ou advogado trabalhista.
     </small>
   `;
+}
+
+// PDF simples
+function baixarPDF() {
+  const conteudo = document.getElementById("resultado").innerText;
+  const win = window.open('', '', 'height=700,width=700');
+  win.document.write('<pre>' + conteudo + '</pre>');
+  win.document.close();
+  win.print();
 }
 </script>
 
