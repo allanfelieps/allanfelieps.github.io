@@ -3,58 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <title>Calculadora de Rescisão</title>
+
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
 
-    .container {
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
+    body {
+      background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      color: #2e7d32;
     }
 
     .campo {
-      margin-bottom: 15px;
       display: flex;
       flex-direction: column;
+      margin-bottom: 15px;
     }
 
     .campo label {
-      font-weight: bold;
+      font-size: 14px;
       margin-bottom: 5px;
       color: #333;
+      font-weight: bold;
     }
 
     .campo input {
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      border-radius: 10px;
       border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .campo input:focus {
+      border-color: #2e7d32;
+      outline: none;
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
+      padding: 14px;
       background: #2e7d32;
       color: white;
+      border: none;
+      border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
       margin-top: 10px;
+      transition: 0.3s;
     }
 
     button:hover {
@@ -64,30 +80,36 @@
     .resultado {
       margin-top: 20px;
       padding: 15px;
-      background: #e8f5e9;
-      border-radius: 8px;
+      background: #f1f8e9;
+      border-radius: 10px;
       display: none;
+      font-size: 14px;
+    }
+
+    .resultado strong {
+      color: #2e7d32;
     }
   </style>
 </head>
+
 <body>
 
-<div class="container">
+<div class="card">
   <h1>Calculadora de Rescisão</h1>
 
   <div class="campo">
-    <label for="admissao">Data de admissão</label>
+    <label>Data de admissão</label>
     <input type="date" id="admissao">
   </div>
 
   <div class="campo">
-    <label for="demissao">Data de demissão</label>
+    <label>Data de demissão</label>
     <input type="date" id="demissao">
   </div>
 
   <div class="campo">
-    <label for="salario">Salário (R$)</label>
-    <input type="number" id="salario" placeholder="Ex: 2000">
+    <label>Salário (R$)</label>
+    <input type="number" id="salario" placeholder="Ex: 2500">
   </div>
 
   <button onclick="calcular()">Calcular</button>
@@ -101,7 +123,9 @@ function calcular() {
   const demissao = new Date(document.getElementById("demissao").value);
   const salario = parseFloat(document.getElementById("salario").value);
 
-  if (!admissao || !demissao || !salario) {
+  if (!document.getElementById("admissao").value || 
+      !document.getElementById("demissao").value || 
+      !salario) {
     alert("Preencha todos os campos!");
     return;
   }
@@ -123,7 +147,7 @@ function calcular() {
     Tempo trabalhado: ${meses} meses<br>
     Saldo de salário: R$ ${saldoSalario.toFixed(2)}<br>
     FGTS: R$ ${fgts.toFixed(2)}<br>
-    Multa FGTS (40%): R$ ${multa.toFixed(2)}<br><br>
+    Multa FGTS: R$ ${multa.toFixed(2)}<br><br>
     <strong>Total: R$ ${total.toFixed(2)}</strong>
   `;
 }
