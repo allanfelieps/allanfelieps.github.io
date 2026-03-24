@@ -5,7 +5,10 @@
 <title>Calculadora de Rescisão</title>
 
 <style>
-* { box-sizing: border-box; font-family: Arial; }
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
 body {
   background: #f4f7fb;
@@ -13,17 +16,24 @@ body {
 }
 
 .container {
-  max-width: 500px;
+  max-width: 600px;
   margin: auto;
   background: white;
-  padding: 25px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 h1 {
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.titulo {
+  font-size: 22px;
+  font-weight: bold;
   margin-bottom: 20px;
+  color: #222;
 }
 
 label {
@@ -38,6 +48,14 @@ input, select {
   margin-top: 5px;
   border-radius: 8px;
   border: 1px solid #ddd;
+  background: #f9fafc;
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #00a86b;
+  background: #fff;
 }
 
 .input-group {
@@ -64,6 +82,11 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #008f5a;
 }
 
 .resultado {
@@ -91,7 +114,10 @@ button {
 <body>
 
 <div class="container">
-  <h1>Calculadora de Rescisão</h1>
+
+  <div class="titulo">
+    Saiba agora como Realizar o Cálculo de Rescisão Trabalhista
+  </div>
 
   <label>Motivo da rescisão</label>
   <select id="motivo">
@@ -112,7 +138,6 @@ button {
     <input type="text" id="salario">
   </div>
 
-  <!-- CHECKBOX CORRIGIDO -->
   <label class="checkbox">
     <input type="checkbox" id="ferias">
     <span>Possui férias vencidas</span>
@@ -122,6 +147,7 @@ button {
   <button onclick="baixarPDF()">Baixar PDF</button>
 
   <div class="resultado" id="resultado"></div>
+
 </div>
 
 <script>
