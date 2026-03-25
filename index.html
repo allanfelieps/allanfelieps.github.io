@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head> 
-     
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7875437984808133"
-     crossorigin="anonymous"></script>
-     
+<head>
 <meta charset="UTF-8">
 <title>Calculadora de Rescisão</title>
 
 <!-- SEO -->
 <meta name="description" content="Calcule sua rescisão trabalhista online de forma simples e rápida. Simulador gratuito com resultado imediato.">
 <meta name="keywords" content="rescisão trabalhista, cálculo de rescisão, simulador de rescisão, quanto vou receber rescisão, FGTS rescisão">
-<meta name="author" content="Rescisão Fácil">
+<meta name="author" content="Allan Felipe">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -279,23 +275,18 @@ let valorAviso=(aviso==="sim")?salario:0;
 if(motivo==="justa"){multa=0;valorFerias=0;valorAviso=0;}
 const total=salario+fgts+multa+valorFerias+valorAviso;
 const r=document.getElementById("resultado");
-r.style.display="block";
+r.style.display="blo
+ck";
 r.innerHTML=`Total: ${formatarMoeda(total)}`;
 }
 function baixarPDF(){
-const c=document.getElementById("resulta
-do").innerText;
+const c=document.getElementById("resultado").innerText;
 const w=window.open('','','height=700,width=700');
 w.document.write('<pre>'+c+'</pre>');
 w.document.close();w.print();
 }
 </script>
 </body>
-  <hr>
-<p style="text-align:center;">
-  <a href="sobre.html">Sobre</a> |
-  <a href="privacidade.html">Privacidade</a>
-</p>
 </html>
 
 
